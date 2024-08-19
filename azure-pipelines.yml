@@ -36,7 +36,7 @@ steps:
 
 - script: |
     dotnet tool install dotnet-ef --version 8.0.0 --global
-    dotnet ef database update --connection "Host=$(DB_HOST);Database=$(DB_NAME);Username=$(DB_USER);Password=$(DB_PASSWORD);SslMode=$(DB_SSLMODE);"
+    dotnet ef database update  --project '$(Build.SourcesDirectory)/DealmateApi/DealmateApi.csproj' --connection "Host=$(DB_HOST);Database=$(DB_NAME);Username=$(DB_USER);Password=$(DB_PASSWORD);SslMode=$(DB_SSLMODE);"
   displayName: 'Apply EF Core Migrations'
   env:
     PATH: $(PATH):$(Agent.ToolsDirectory)/dotnet/tools
