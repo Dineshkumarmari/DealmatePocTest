@@ -32,7 +32,7 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: true
-    arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
+    arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)/api'
 
 - script: |
     dotnet tool install dotnet-ef --version 8.0.0 --global
@@ -47,16 +47,16 @@ steps:
   workingDirectory: 'ui'
   displayName: 'Install and Build UI'
 
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish UI Artifacts'
+- task: CopyFiles@2
+  displayName: 'Move UI Build to Drop Folder'
   inputs:
-    PathtoPublish: 'ui/build'
-    ArtifactName: 'ui'
-    publishLocation: 'Container'
-    
+    SourceFolder: 'ui/build'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/ui'
+
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish Backend Artifacts'
+  displayName: 'Publish Artifacts'
   inputs:
     pathToPublish: '$(Build.ArtifactStagingDirectory)'
-    artifactName: 'backend'
+    artifactName: 'drop'
     publishLocation: 'Container'
