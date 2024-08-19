@@ -1,0 +1,6 @@
+@DealmateApi_HostAddress = http://localhost:5027
+
+GET {{DealmateApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
